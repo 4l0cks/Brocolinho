@@ -12,12 +12,23 @@ class Player {
 public:
     int x, y, w, h;
     int hp;
+    int speed;
 
     Player(); 
     void draw() const;
     void move();
     bool collidesWith(const Enemy& enemy) const;
+    void attackZone(Enemy enemies[], int enemyCount);
     bool isAlive() const;
+    void takeDamage(int amount);
+
+
+private:
+    unsigned long lastAttackTime;
+    unsigned long attackCooldown;
+
+    unsigned long lastDamageTime;
+    unsigned long damageCooldown;
 };
 
 

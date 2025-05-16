@@ -5,6 +5,7 @@
 #include "Player.h"
 
 Enemy::Enemy() {
+  alive = false;
   w = h = 3;
   x = 10; 
   y = 10;
@@ -12,11 +13,13 @@ Enemy::Enemy() {
 }
 
 void Enemy::draw() const {
-  gb.display.setColor(GREEN);
+  if (!alive) return;
+  gb.display.setColor(WHITE);
   gb.display.fillRect(x, y, w, h);
 }
 
-void Enemy::moveTowards(const Player& player) {
+void Enemy::move(const Player& player) {
+  if (!alive) return;
   if (moveCooldown > 0) {
     moveCooldown--;
     return;  
@@ -30,7 +33,7 @@ void Enemy::moveTowards(const Player& player) {
   else if (y > player.y) y--;
 }
 
-void Enemy::spawnAwayFromPlayer(const Player& player, int minDistance) {
+void Enemy::spawn(const Player& player, int minDistance) {
   int attempts = 0;
   const int maxAttempts = 50;
 
@@ -45,4 +48,6 @@ void Enemy::spawnAwayFromPlayer(const Player& player, int minDistance) {
     if (dist >= minDistance) break;
     attempts++;
   } while (attempts < maxAttempts);
+
+  alive = true;
 }

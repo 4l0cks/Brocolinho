@@ -10,11 +10,12 @@ class Player;
 class Enemy {
 public: 
   int x, y, w, h;
+  bool alive;
 
   Enemy();
   void draw() const;
-  void moveTowards(const Player& player);
-  void spawnAwayFromPlayer(const Player& player, int minDistance);
+  void move(const Player& player);
+  void spawn(const Player& player, int minDistance);
 
 private:
   int moveCooldown;           
